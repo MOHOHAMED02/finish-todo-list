@@ -27,10 +27,9 @@ async function update(id,user){
     return result.affectedRows;
 }
 
-
-async function getByUserName(username){
-    let sql = `SELECT * FROM users WHERE username = ?`;
-    let [result] = await db.query(sql,[username]); 
+async function getByUserName(userName){
+    let sql = `SELECT * FROM users WHERE userName = ?`;
+    let [result] = await db.query(sql,[userName]); 
     return result[0];
 }
 
@@ -40,10 +39,9 @@ async function getByEmail(email){
     return result[0];
 }
 
-
-async function addUser({name,email,username,pass}){
-    let sql = `INSERT INTO users (name,email,username,pass) VALUES (?,?,?,?)`;
-    let [result] = await db.query(sql,[name,email,username,pass]); 
+async function addUser({name,email,userName,pass}){
+    let sql = `INSERT INTO users (name,email,userName,pass) VALUES (?,?,?,?)`;
+    let [result] = await db.query(sql,[name,email,userName,pass]); 
     return result.insertId;
 }
 
