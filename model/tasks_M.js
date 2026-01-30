@@ -1,9 +1,9 @@
 const db = require('../config/db_config');
 
 async function getAll(userId){
-    let sql = `SELECT * FROM tasks WHERE user_id = ?`;
+    let sql = `SELECT * FROM tasks WHERE user_id = ?`; 
     let [rows] = await db.query(sql,[userId]);    
-    return rows;
+    return rows;        
 }
 
 async function add({text,userId,catId}){
