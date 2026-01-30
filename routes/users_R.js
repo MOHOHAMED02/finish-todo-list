@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const {getAllUsers,getOneUser,deleteUser,updateUser} = require('../controller/users_C.js');
-const {isValidId,valuesToEdit} = require('../middelware/users_MID');
-const {isLoggedIn} = require('../middelware/auth_MID');
 
-router.get('/',isLoggedIn,getAllUsers);
-router.get('/:id',isValidId,getOneUser);
-router.delete('/:id',isValidId,deleteUser);
-router.patch('/:id',isValidId,valuesToEdit,updateUser);
+const { getAllCategories, addCategory, getCategory, deleteCategory, updateCategory } = require('../controller/categories_C');
+const { isLoggedIn } = require('../middelware/auth_MID');
+
+
+router.get('/', isLoggedIn, getAllCategories);
+router.get('/:id', isLoggedIn, getCategory);
+router.post('/', isLoggedIn, addCategory);
+router.delete('/:id', isLoggedIn, deleteCategory);
+router.put('/:id', isLoggedIn, updateCategory);
 
 module.exports = router;
