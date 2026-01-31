@@ -1,5 +1,5 @@
 async function login() {
-    let userName = document.getElementById('userName').value;
+    let userName = document.getElementById('userName').value; 
     let pass = document.getElementById('pass').value;
     try {
         if (userName && pass) {
