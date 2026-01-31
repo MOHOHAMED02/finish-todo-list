@@ -2,7 +2,7 @@ const db = require('../config/db_config');
 const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken');
 
-async function register(req, res) {
+async function register(req, res) { 
     try {
         const { name, email, userName } = req.body; 
         const hashPass = req.pass; 
