@@ -2,102 +2,106 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
-
-body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        body { 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
             background-color: #054cb6; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         }
-
-
-        .auth-card {
-            background: rgb(250, 249, 250);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); 
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
+        .auth-card { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            width: 100%; 
+            max-width: 380px; 
+            text-align: center; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
-
-        h2 {
-            color: #333;
-            margin-bottom: 25px;
-            font-size: 28px;
-            font-weight: 600;
-        }
-
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+        h2 { color: #333; margin-bottom: 25px; }
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
             box-sizing: border-box; 
-            outline: none;
-            font-size: 16px;
-            transition: border-color 0.3s;
         }
-
-        input:focus {
-            border-color: #4caf50; 
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
+        button { 
+            width: 100%; 
+            padding: 14px; 
             background-color: #052fee; 
-            color: white;
-            border: none;
-            border-radius: 8px;
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
             font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 10px;
         }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        /* עיצוב הקישור למטה */
-        .register-link {
-            display: block;
-            margin-top: 20px;
-            color: #8a2be2; /* סגול לקישור */
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .register-link:hover {
-            text-decoration: underline;
-        }
+        button:hover { background-color: #4caf50; }
+        #message { margin-top: 15px; font-weight: bold; }
+        a { display: block; margin-top: 20px; color: #8a2be2; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <div class="auth-card">
         <h2>Login</h2>
-        
         <input type="text" id="userName" placeholder="User Name">
         <input type="password" id="pass" placeholder="Password">
         
         <button onclick="login()">Send</button>
         
-        <a href="/reg" class="register-link">Don't have an account? Register</a>
+        <div id="message"></div>
+
+        <a href="/pages/reg.html">Don't have an account? Register</a>
     </div>
 
-    <script src="/js/main.js"></script>
+    <script>
+        async function login() {
+            const userName = document.getElementById('userName').value;
+            const pass = document.getElementById('pass').value;
+            const msg = document.getElementById('message');
+
+            msg.innerText = ""; 
+
+            if (!userName || !pass) {
+                msg.style.color = 'orange';
+                msg.innerText = "נא למלא שם משתמש וסיסמה";
+                return;
+            }
+
+            try {
+
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userName, pass })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    msg.style.color = 'green';
+                    msg.innerText = "התחברת בהצלחה! מעביר לדף הבית...";
+                    setTimeout(() => {
+                        window.location.href = '/'; 
+                    }, 1000);
+                } else {
+                    msg.style.color = 'red';
+                    msg.innerText = "שגיאה: " + (data.message || "פרטים לא נכונים");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                msg.style.color = 'red';
+                msg.innerText = "שגיאה בחיבור לשרת";
+            }
+        }
+    </script>
 
 </body>
 </html>
