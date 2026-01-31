@@ -4,7 +4,7 @@ const db = require('../config/db_config');
 async function getAllCategories(req, res) {
     try {
         let categories = await getAll(req.user.id);
-        if (categories.length == 0) {
+        if (categories.length == 0) { 
             return res.status(200).json([]);
         }
         res.status(200).json(categories);
