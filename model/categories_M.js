@@ -2,7 +2,7 @@ const db = require('../config/db_config');
 
 async function getAll(userId){ 
     let sql = `SELECT * FROM categories WHERE user_id = ?`;
-    let [rows] = await db.query(sql,[userId]);    
+    let [rows] = await db.query(sql,[userId]);     
     return rows;
 }
 
