@@ -7,7 +7,7 @@ async function login() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userName, pass })
-            })
+            }) 
             let data = await response.json();
             if (response.status == 200) { 
                 localStorage.setItem('name',data.name);
