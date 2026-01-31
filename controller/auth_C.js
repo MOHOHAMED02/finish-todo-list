@@ -7,7 +7,6 @@ async function register(req, res) {
         const { name, email, userName } = req.body; 
         const hashPass = req.pass; 
 
-
         const sql = "INSERT INTO users (name, email, userName, pass) VALUES (?, ?, ?, ?)";
         await db.query(sql, [name, email, userName, hashPass]);
 
