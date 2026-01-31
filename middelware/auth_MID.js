@@ -7,7 +7,7 @@ function valuesToAdd(req, res, next) {
     next();
 }
 
-function valuesToLogin(req, res, next) {
+function valuesToLogin(req, res, next) { 
     let { userName, pass } = req.body;
     if (!userName || !pass) return res.status(400).json({ message: "Missing data" });
     next();
