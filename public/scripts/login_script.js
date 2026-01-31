@@ -9,7 +9,7 @@ async function login() {
                 body: JSON.stringify({ userName, pass })
             })
             let data = await response.json();
-            if (response.status == 200) {
+            if (response.status == 200) { 
                 localStorage.setItem('name',data.name);
                 window.location.href = '/';
                 return;
